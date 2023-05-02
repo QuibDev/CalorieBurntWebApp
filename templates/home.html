@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Calories Burnt Prediction</title>
+    <style>
+      body {
+        background-color: #1a1a1a;
+        color: #fff;
+        font-family: "Open Sans", sans-serif;
+        font-size: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .container {
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 48px;
+        margin-top: 0;
+      }
+
+      form {
+        margin-top: 30px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      select,
+      input[type="number"] {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      button[type="submit"] {
+        background-color: #4caf50;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Calories Burnt Prediction</h1>
+      <form action="/predict" method="post">
+        <label for="gender">Gender:</label>
+        <select name="gender" id="gender">
+          <option value="male" selected>Male</option>
+          <option value="female">Female</option>
+        </select>
+
+        <label for="exercise_type">Exercise Type:</label>
+        <select name="exercise_type" id="exercise_type">
+          <option value="walking">Walking</option>
+          <option value="running">Running</option>
+          <option value="cycling">Cycling</option>
+        </select>
+
+        <label for="duration">Duration:</label>
+        <input
+          type="range"
+          name="duration"
+          id="duration"
+          min="5"
+          max="30"
+          value="10"
+        />
+        <span id="duration-value">10</span> minutes
+
+        <label for="heart_rate_range">Heart Rate Range:</label>
+        <input
+          type="range"
+          name="heart_rate_range"
+          id="heart_rate_range"
+          min="90"
+          max="150"
+          value="120"
+        />
+        <span id="heart_rate_range-value">120</span> bpm
+
+        <button type="submit">Predict Calories Burnt</button>
+      </form>
+      <div class="prediction">
+        {% if prediction %}
+        <p>Prediction:</p>
+        <p class="calories">You will burn {{ prediction }} Calories.</p>
+        {% endif %}
+      </div>
+    </div>
+    <script>
+      const durationSlider = document.getElementById("duration");
+      const durationValue = document.getElementById("duration-value");
+      durationValue.innerHTML = durationSlider.value;
+      durationSlider.oninput = function () {
+        durationValue.innerHTML = this.value;
+      };
+
+      const heartRateSlider = document.getElementById("heart_rate_range");
+      const heartRateValue = document.getElementById("heart_rate_range-value");
+      heartRateValue.innerHTML = heartRateSlider.value;
+      heartRateSlider.oninput = function () {
+        heartRateValue.innerHTML = this.value;
+      };
+    </script>
+  </body>
+</html>
